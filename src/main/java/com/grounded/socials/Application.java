@@ -36,8 +36,9 @@ public class Application implements SparkApplication {
                 return "connection has not been established.";
             }
         });
+
         new UserController(new UserService());
-        //new StoreController(new StoreService());
+        new StoreController(new StoreService());
     }
     public static void main(String[] args) {
         new Application().init();

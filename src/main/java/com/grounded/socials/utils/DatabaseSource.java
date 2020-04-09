@@ -1,5 +1,6 @@
 package com.grounded.socials.utils;
 
+import com.grounded.socials.models.Store;
 import com.grounded.socials.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,7 +22,7 @@ public class DatabaseSource {
             try {
                 Configuration configuration = new Configuration();
                 configuration.configure(new File("./hibernate.cfg.xml"))
-                .addAnnotatedClass(User.class);
+                .addAnnotatedClass(User.class).addAnnotatedClass(Store.class);
 
                 sessionFactory = configuration.buildSessionFactory();
             } catch (Throwable ex) {
