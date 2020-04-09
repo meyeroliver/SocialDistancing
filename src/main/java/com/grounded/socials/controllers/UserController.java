@@ -2,19 +2,25 @@ package com.grounded.socials.controllers;
 
 import com.grounded.socials.services.UserService;
 import com.grounded.socials.utils.JsonUtil;
-import spark.Spark;
-
 import static spark.Spark.*;
+
 
 public class UserController {
 
     public UserController(final UserService userService) {
 
-        Spark.post("/users/create",(request, response) -> "implementing create user endpoint", JsonUtil.json());
+        post("/users/create",(request, response) -> "implementing create user endpoint", JsonUtil.json());
 
-        Spark.get("/users", "com/grounded/socials/json",(request, response) -> userService.getAllUsers(), JsonUtil.json());
+        get("/users",(request, response) -> "implement getting all users", JsonUtil.json());
 
-        Spark.get("/users/:id", (request, response) -> "implement getting desired user by id", JsonUtil.json());
+        get("/users/:id", (request, response) -> {
+            try {
+                int id = Integer.parseInt(request.params("id"));
+                return userService.getUser(id);
+            } catch (NumberFormatException e){
+                return e.getMessage();
+            }
+        }, JsonUtil.json());
 
         get("users/stores/",(request, response) -> "implementing getting all stores that belong to user endpoint");
 
