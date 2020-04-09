@@ -36,7 +36,6 @@ public class Application implements SparkApplication {
             } else {
                 return "connection has not been established.";
             }
-
             /*try {
                 Connection conn = DataSourceConnection.getDataSourceConnection().getDataSource().getConnection();
                 if (conn != null) {
@@ -47,6 +46,7 @@ public class Application implements SparkApplication {
             } catch (SQLException e) {
                 throw new ServletException("Unable to connect to Cloud SQL", e);
             }*/
+//            return "awe";
         });
 
        /* new UserController(new UserService());
