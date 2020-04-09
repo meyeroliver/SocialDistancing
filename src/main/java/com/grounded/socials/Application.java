@@ -2,11 +2,13 @@ package com.grounded.socials;
 
 import com.grounded.socials.controllers.StoreController;
 import com.grounded.socials.controllers.UserController;
+import com.grounded.socials.models.User;
 import com.grounded.socials.services.StoreService;
 import com.grounded.socials.services.UserService;
 import com.grounded.socials.utils.DataSourceConnection;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import spark.servlet.SparkApplication;
 
@@ -28,42 +30,26 @@ public class Application implements SparkApplication {
 
         get("/connect", (request, response) -> {
 
-            Configuration configuration =  new Configuration().configure(new File("./hibernate.cfg.xml"));
+            Configuration configuration =  new Configuration()
+                    .configure(new File("./hibernate.cfg.xml"))
+                    .addAnnotatedClass(User.class);
             SessionFactory sessionFactory = configuration.buildSessionFactory();
             Session session = sessionFactory.openSession();
             if (session.isOpen()) {
+                Transaction transaction = session.beginTransaction();
+                session.save(new User(2, "Okay", "Okay",
+                        "Okay","Okay","Okay", 0L, 0L));
+                transaction.commit();
+
                 return "connection established";
             } else {
                 return "connection has not been established.";
             }
-            /*try {
-                Connection conn = DataSourceConnection.getDataSourceConnection().getDataSource().getConnection();
-                if (conn != null) {
-                    return "connection established";
-                } else {
-                    return "connection has not been established.";
-                }
-            } catch (SQLException e) {
-                throw new ServletException("Unable to connect to Cloud SQL", e);
-            }*/
-//            return "awe";
         });
-
        /* new UserController(new UserService());
         new StoreController(new StoreService());*/
     }
     public static void main(String[] args) {
         new Application().init();
     }
-
-    /*
-    *  <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <property name="hibernate.connection.url">jdbc:mysql:///migrate_test?cloudSqlInstance=social-distancing-272013:europe-west1:mysql-test&amp;socketFactory=com.google.cloud.sql.mysql.SocketFactory</property>
-        <property name="hibernate.connection.username">oliver</property>
-        <property name="hibernate.connection.password">oliver123</property>
-
-
-        <property name="show_sql">true</property>
-    * */
 }

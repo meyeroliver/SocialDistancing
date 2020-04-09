@@ -2,12 +2,17 @@ package com.grounded.socials.models;
 
 import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
+@Entity(name = "users")
 public class User {
-    private int userId;
+    @Id
+    private int id;
     private String username;
     private String firstname;
     private String lastname;
