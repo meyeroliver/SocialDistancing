@@ -46,8 +46,8 @@ public class Application implements SparkApplication {
                 "6 Clift Street, Suider Paarl, Paarl, 7624", "0762598650",
                 -33.7634f, 18.9621f);
 
-            user.getStoreList().add(store);
-            store.setUser(user);
+            user.getStores().add(store);
+            store.getUsers().add(user);
 
             session.save(store);
             session.save(user);

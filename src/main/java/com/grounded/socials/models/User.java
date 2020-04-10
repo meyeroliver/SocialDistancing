@@ -30,6 +30,6 @@ public class User {
     private float latitude;
     @NonNull
     private float longitude;
-    @OneToMany(mappedBy = "user")
-    private List<Store> storeList = new ArrayList<>();
+    @ManyToMany(mappedBy = "users")
+    private List<Store> stores = new ArrayList<>();
 }
