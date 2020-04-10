@@ -15,6 +15,7 @@ public class UserService {
     private SessionFactory sessionFactory;
 
     public UserService() {
+        DatabaseSource databaseSource =  DatabaseSource.getInstance();
         sessionFactory = DatabaseSource.getSessionFactory();
     }
 

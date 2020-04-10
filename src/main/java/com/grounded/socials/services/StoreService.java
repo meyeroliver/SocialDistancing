@@ -15,6 +15,7 @@ public class StoreService {
     private SessionFactory sessionFactory;
 
     public StoreService() {
+        DatabaseSource.getInstance();
         sessionFactory = DatabaseSource.getSessionFactory();
     }
 
