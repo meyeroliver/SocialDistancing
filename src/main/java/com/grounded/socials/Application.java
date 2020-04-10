@@ -16,6 +16,8 @@ import spark.servlet.SparkApplication;
 
 import javax.sql.DataSource;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import static spark.Spark.*;
 
@@ -36,13 +38,16 @@ public class Application implements SparkApplication {
             Session session = DatabaseSource.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
 
-            Store store = new Store(3, "SUPERSPAR The Vineyard, Paarl",
+            Store store = new Store("SUPERSPAR The Vineyard, Paarl",
                 "7646 Main Road Paarl,Shop 1, Vineyard Centre, 57, Cape Town, 7620",
-                -33.763f, 18.9621f, 0);
+                -33.763f, 18.9621f);
 
-            User user = new User(3, "oh-meyer", "Oliver", "Meyer",
+            User user = new User( "oh-meyer", "Oliver", "Meyer",
                 "6 Clift Street, Suider Paarl, Paarl, 7624", "0762598650",
-                -33.7634f, 18.9621f, store);
+                -33.7634f, 18.9621f);
+
+            user.getStoreList().add(store);
+            store.setUser(user);
 
             session.save(store);
             session.save(user);
@@ -50,8 +55,8 @@ public class Application implements SparkApplication {
             return "awe";
         });
 
-        /*new UserController(new UserService());
-        new StoreController(new StoreService());*/
+        new UserController(new UserService());
+        /*new StoreController(new StoreService());*/
     }
     public static void main(String[] args) {
         new Application().init();

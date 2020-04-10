@@ -1,30 +1,32 @@
 package com.grounded.socials.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.omg.PortableInterceptor.NON_EXISTENT;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+@RequiredArgsConstructor
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @Entity
-@Table(name = "stores")
+@Table(name = "store")
 public class Store {
     @Id
     private int id;
     @Column(name = "store_name")
+    @NonNull
     private String storeName;
+    @NonNull
     private String address;
+    @NonNull
     private float latitude;
+    @NonNull
     private float longitude;
     private int customers;
+    @ManyToOne
+    private User user;
     /**
      * {
      * id: 1,

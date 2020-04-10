@@ -4,7 +4,6 @@ import com.grounded.socials.services.UserService;
 import com.grounded.socials.utils.JsonUtil;
 import static spark.Spark.*;
 
-
 public class UserController {
 
     public UserController(final UserService userService) {

@@ -2,27 +2,34 @@ package com.grounded.socials.models;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
+@RequiredArgsConstructor
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
     @Id
     private int id;
+    @NonNull
     private String username;
+    @NonNull
     private String firstname;
+    @NonNull
     private String lastname;
+    @NonNull
     private String address;
+    @NonNull
     private String cellPhone;
+    @NonNull
     private float latitude;
+    @NonNull
     private float longitude;
-    @OneToOne
-    private Store store  ;
+    @OneToMany(mappedBy = "user")
+    private List<Store> storeList = new ArrayList<>();
 }
