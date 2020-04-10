@@ -56,7 +56,7 @@ public class Application implements SparkApplication {
         });
 
         new UserController(new UserService());
-        /*new StoreController(new StoreService());*/
+        new StoreController(new StoreService());
     }
     public static void main(String[] args) {
         new Application().init();

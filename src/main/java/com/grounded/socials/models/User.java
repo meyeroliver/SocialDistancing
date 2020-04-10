@@ -1,5 +1,7 @@
 package com.grounded.socials.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,6 +32,7 @@ public class User {
     private float latitude;
     @NonNull
     private float longitude;
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<Store> stores = new ArrayList<>();
 }

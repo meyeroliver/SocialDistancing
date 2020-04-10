@@ -1,5 +1,7 @@
 package com.grounded.socials.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.omg.PortableInterceptor.NON_EXISTENT;
 
@@ -27,7 +29,8 @@ public class Store {
     @NonNull
     private float longitude;
     private int customers;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonBackReference
     private List<User> users =  new ArrayList<>();
 }
 
