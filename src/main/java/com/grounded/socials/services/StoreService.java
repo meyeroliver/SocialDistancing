@@ -6,16 +6,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
-
 public class StoreService {
 
     private SessionFactory sessionFactory;
 
     public StoreService() {
-        DatabaseSource.getInstance();
         sessionFactory = DatabaseSource.getSessionFactory();
     }
 
