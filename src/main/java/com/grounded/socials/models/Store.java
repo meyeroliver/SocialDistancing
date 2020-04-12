@@ -15,27 +15,28 @@ import java.util.List;
 @Getter
 @Entity
 @Table(name = "store")
-@SQLInsert(sql = "insert into store (customers, id, latitude, longitude, store_name, address) " +
-        "values (?, ?, ?, ?, ?, ?)" +
-        " on duplicate key update id = id")
+@SQLInsert(sql = "insert into store (customers, latitude, longitude, store_name, address) " +
+        "values (?, ?, ?, ?, ?)" +
+        " on duplicate key update address = address")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+        property = "address")
 public class Store {
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    @NonNull
-    @Column(name = "store_name")
-    private String storeName;
+    /*@GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;*/
     @NonNull
     @Id
     private String address;
+    @NonNull
+    @Column(name = "store_name")
+    private String storeName;
     @NonNull
     private Float latitude;
     @NonNull
     private Float longitude;
     private int customers;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "storeList")
+    @JsonBackReference
     private List<User> userList =  new ArrayList<>();
 }
 

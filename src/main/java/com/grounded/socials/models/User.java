@@ -40,7 +40,7 @@ public class User {
             cascade = CascadeType.PERSIST)
     @JoinTable(name="user_store",
                 joinColumns = {@JoinColumn(name = "user_id")},
-                inverseJoinColumns = {@JoinColumn(name = "")}
+                inverseJoinColumns = {@JoinColumn(name = "store_address")}
     )
     private List<Store> storeList = new ArrayList<>();
 }
