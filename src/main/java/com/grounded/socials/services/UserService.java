@@ -2,12 +2,16 @@ package com.grounded.socials.services;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.grounded.socials.models.Store;
 import com.grounded.socials.models.User;
 import com.grounded.socials.utils.DatabaseSource;
 import lombok.NonNull;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
 import static com.grounded.socials.utils.JsonUtil.*;
 
 
@@ -25,8 +29,12 @@ public class UserService {
     }
 
     public List<User> getAllUsers(){
-        List<User> users = new ArrayList<>();
-        return users;
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("FROM User");
+        List<User> userList = query.list();
+        transaction.commit();
+        return userList;
     }
 
     public User getUser(int id) {
@@ -47,7 +55,7 @@ public class UserService {
             Session session = sessionFactory.getCurrentSession();
             Transaction transaction = session.beginTransaction();
             User user = objectMapper().readValue(body, User.class);
-            session.save(user);
+            session.persist(user);
             transaction.commit();
             return true;
 
@@ -72,8 +80,18 @@ public class UserService {
         }
     }
 
-    public boolean deleteUser(int id) {
-
-        return true;
+    public Integer deleteUser(int id) {
+        try {
+            Session session = sessionFactory.getCurrentSession();
+            Transaction transaction = session.beginTransaction();
+            Query query = session.createQuery("DELETE FROM User WHERE id = :id");
+            query.setParameter("id", id);
+            int deleted = query.executeUpdate();
+            transaction.commit();
+            return deleted;
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

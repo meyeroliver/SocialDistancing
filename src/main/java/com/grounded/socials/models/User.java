@@ -32,9 +32,15 @@ public class User {
     @NonNull
     private String cellPhone;
     @NonNull
-    private float latitude;
+    private Float latitude;
     @NonNull
-    private float longitude;
-    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
-    private List<Store> stores = new ArrayList<>();
+    private Float longitude;
+    @ManyToMany( fetch = FetchType.EAGER,
+            /*mappedBy = "userList",*/
+            cascade = CascadeType.PERSIST)
+    @JoinTable(name="user_store",
+                joinColumns = {@JoinColumn(name = "user_id")},
+                inverseJoinColumns = {@JoinColumn(name = "")}
+    )
+    private List<Store> storeList = new ArrayList<>();
 }

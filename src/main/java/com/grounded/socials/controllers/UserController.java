@@ -1,6 +1,5 @@
 package com.grounded.socials.controllers;
 
-import com.grounded.socials.models.User;
 import com.grounded.socials.services.UserService;
 
 import static com.grounded.socials.utils.JsonUtil.*;
@@ -50,12 +49,29 @@ public class UserController {
                     return "A problem occurred on the server";
                 }
             } catch (NumberFormatException e){
-                e.getMessage();
                 response.status(400);
-                return "Query Param id must be an integer";
+                return e.getMessage();
             }
         }, json());
 
-        delete("/users/delete/:id", (request, response) -> "implementing the delete user endpoint");
+        delete("/users/delete/:id", (request, response) -> {
+            try {
+                int id = Integer.parseInt(request.params("id"));
+                Integer deletedRowNum = userService.deleteUser(id);
+                if (deletedRowNum == 0) {
+                    response.status(400);
+                    return "User Does not exist.";
+                } else if (deletedRowNum == null){
+                    response.status(500);
+                    return "A problem occurred on the server";
+                } else {
+                    response.status(200);
+                    return "User Successfully deleted";
+                }
+            } catch (NumberFormatException e){
+                response.status(400);
+                return e.getMessage();
+            }
+        }, json());
     }
 }
